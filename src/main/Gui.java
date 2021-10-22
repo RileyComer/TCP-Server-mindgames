@@ -65,13 +65,18 @@ public class Gui extends JFrame{
 					public void keyPressed(KeyEvent ke) {  // handler
 						if(ke.getKeyCode() == KeyEvent.VK_ESCAPE) {
 							if(mode[0].equals("Menu")) {
+								try {
+									gameframe.exit();
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
 								System.exit(0);
 							}else {
 								window.setMode("Menu");
 							}
 							
 						}else if(ke.getKeyCode() == KeyEvent.VK_F) {
-							
+							gameframe.test();
 							
 						}else if(ke.getKeyCode() == KeyEvent.VK_C) {
 							

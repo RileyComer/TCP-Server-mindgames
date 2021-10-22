@@ -1,7 +1,7 @@
 package main;
 import java.awt.event.KeyEvent;
 
-public class Start implements Runnable{
+public class StartClient implements Runnable{
 	
 	private Thread thread;
 	private Window window;
@@ -10,7 +10,7 @@ public class Start implements Runnable{
 	
 	
 	public static void main(String[] args) {
-		Start game=new Start();
+		StartClient game=new StartClient();
 		game.start();
 	}
 	
@@ -18,7 +18,7 @@ public class Start implements Runnable{
 		if(running) {
 			return;
 		}
-		window=new Window();
+		window=new Window("client");
 		running=true;
 		thread=new Thread((Runnable) this);
 		thread.run();

@@ -12,13 +12,17 @@ public class Window {
 	
 	private String[] mode=new String[1];
 	
-	public Window() {
+	public Window(String connection) {
 		// Creates Window
 		mode[0]="Menu";
-		gameframe=new Gameframe();
+		if(connection.equals("server")) {
+			gameframe=new Gameframe(1);
+		}else {
+			gameframe=new Gameframe(2);
+		}
 		gui= new Gui (this, mode, gameframe);
 		gui.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-		gui.setUndecorated(true);
+		//gui.setUndecorated(true);
 		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		gui.setVisible(true);
 		
