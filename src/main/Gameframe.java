@@ -4,13 +4,12 @@ import java.io.IOException;
 
 import gameObjects.Board;
 import serverAndClient.Client;
+import serverAndClient.OnlineHandler;
 import serverAndClient.Server;
 
 public class Gameframe {
 	private Board board;
-	private Server server;
-	private Client client;
-	private String address;
+	private OnlineHandler onlineHandler;
 	private int player;
 	private int turn;
 	
@@ -20,19 +19,10 @@ public class Gameframe {
 		 this.player=player;
 		 
 		 //online stuff
-		 address="142.231.45.161";//public IP
-		 try {
-			 server=new Server(3000);
-			 client=new Client();
-			 
-			 if(player==1) {
-				 server.start();
-			 }else {
-				 client.start(address, 3000);
-			 }
-		 } catch (IOException e) {
-			 System.out.println("Error Can not connect");
-			 e.printStackTrace();
+		 if(player==1) {
+			 onlineHandler=new OnlineHandler("server");
+		 }else {
+			 onlineHandler=new OnlineHandler("client");
 		 }
 	 }
 	 
@@ -42,26 +32,20 @@ public class Gameframe {
 				 //turn stuff
 			 }else {
 				 int i;
-				 try {
-					 i = server.getInt();
-					 System.out.println(i);
-				 } catch (IOException e) {
-					 System.out.println("Connection error");
-					 e.printStackTrace();
-				 }
+				 System.out.println("waiting");
+				 i = onlineHandler.getInt();
+				 System.out.println(i);
+				 turn++;
 			 }
 		 }else {
 			 if(turn%2==0) {
 				 //turn stuff
 			 }else {
 				 int i;
-				 try {
-					 i = client.getInt();
-					 System.out.println(i);
-				 } catch (IOException e) {
-					 System.out.println("Connection error");
-					 e.printStackTrace();
-				 }
+				 System.out.println("waiting");
+				 i = onlineHandler.getInt();
+				 System.out.println(i);
+				 turn++;
 			 }
 		 }
 	 }
@@ -70,16 +54,13 @@ public class Gameframe {
 		 return board;
 	 }
 
-	public void exit() throws IOException {
-		if(player==1) {
-			server.close();
-		}else {
-			client.close();
-		}
+	public void exit() {
+		onlineHandler.close();
 		
 	}
 
 	public void test() {
 		turn++;
+		onlineHandler.writeInt(turn);
 	}
 }

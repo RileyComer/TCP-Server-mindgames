@@ -29,7 +29,7 @@ public class Mode1Display{
 		startX=(int)((gui.getWidth()/2.0)-((size*frameW)/2.0));
 		startY=(int)((gui.getHeight()/2.0)-((size*frameH)/2.0));
 		
-		//Map
+		//board
 		for(int y=0; y< frameH; y++) {
 			for(int x=0; x<frameW;x++) {
 				if((x+y)%2==0) {
@@ -42,6 +42,13 @@ public class Mode1Display{
 		}
 		
 		//Draw pieces
-		
+		for(int y=0; y< frameH; y++) {
+			for(int x=0; x<frameW;x++) {
+				if(gameframe.getBoard().getArray()[x][y]!=null && gameframe.getBoard().getArray()[x][y].contains("Payload")) {
+					g.setColor(new Color(250, 250, 250));
+					g.fillRect(startX+size*x, startY+size*((frameH-1)-y), size, size);
+				}
+			}
+		}
 	}
 }

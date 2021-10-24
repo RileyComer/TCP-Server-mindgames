@@ -55,6 +55,10 @@ public class Board {
 		
 	}
 	
+	public String[][] getArray() {
+		return board;
+	}
+	
 	public void setBoss(int team, String piece) {
 		if(team==1) {
 			wBoss=piece;

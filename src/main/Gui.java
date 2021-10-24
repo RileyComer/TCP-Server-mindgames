@@ -24,8 +24,8 @@ public class Gui extends JFrame{
 	private String[] mode;
 	private Gameframe gameframe;
 	
-	public Gui(Window window, String[] mode, Gameframe gameframe) {
-		super("Title");
+	public Gui(Window window, String[] mode, Gameframe gameframe, String name) {
+		super(name);
 		this.window=window;
 		this.mode=mode;
 		this.gameframe=gameframe;
@@ -65,11 +65,7 @@ public class Gui extends JFrame{
 					public void keyPressed(KeyEvent ke) {  // handler
 						if(ke.getKeyCode() == KeyEvent.VK_ESCAPE) {
 							if(mode[0].equals("Menu")) {
-								try {
-									gameframe.exit();
-								} catch (IOException e) {
-									e.printStackTrace();
-								}
+								gameframe.exit();
 								System.exit(0);
 							}else {
 								window.setMode("Menu");

@@ -20,9 +20,9 @@ public class Window {
 		}else {
 			gameframe=new Gameframe(2);
 		}
-		gui= new Gui (this, mode, gameframe);
+		gui= new Gui (this, mode, gameframe, connection);
 		gui.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-		//gui.setUndecorated(true);
+		gui.setUndecorated(true);
 		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		gui.setVisible(true);
 		
@@ -30,6 +30,7 @@ public class Window {
 	
 	public void update() {
 		if(mode[0].equals("Mode1")) {
+			gui.redraw();
 			gameframe.update();
 		}
 		gui.redraw();
