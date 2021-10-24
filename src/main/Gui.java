@@ -23,12 +23,16 @@ public class Gui extends JFrame{
 	private Window window;
 	private String[] mode;
 	private Gameframe gameframe;
+	private int selectedX, selectedY;
 	
 	public Gui(Window window, String[] mode, Gameframe gameframe, String name) {
 		super(name);
 		this.window=window;
 		this.mode=mode;
 		this.gameframe=gameframe;
+		
+		selectedX=-1;
+		selectedY=-1;
 		
 		/*
 		File file=new File("C:\\Users\\Riley\\Desktop\\Maps\\Map.png");
@@ -72,7 +76,6 @@ public class Gui extends JFrame{
 							}
 							
 						}else if(ke.getKeyCode() == KeyEvent.VK_F) {
-							gameframe.test();
 							
 						}else if(ke.getKeyCode() == KeyEvent.VK_C) {
 							
@@ -132,6 +135,32 @@ public class Gui extends JFrame{
 						window.setMode("Mode2");
 					}else if(y<startY+(size*5)) {
 						System.exit(0);
+					}
+				}
+			}else if(mode[0].equals("Mode1")) {
+				int frameW=gameframe.getBoard().getWidth();
+				int frameH=gameframe.getBoard().getHeight();
+				if((getWidth()/frameW)<getHeight()/frameH) {
+					size=getWidth()/frameW;
+				}else {
+					size=getHeight()/frameH;
+				}
+				startX=(int)((getWidth()/2.0)-((size*frameW)/2.0));
+				startY=(int)((getHeight()/2.0)-((size*frameH)/2.0));
+				if(x>startX && x<startX+size*frameW) {
+					if(y>startY && y<startY+size*frameH) {
+						int px=(int) (x-startX)/size;
+						int py=(int) ((frameH)-((y-startY)/size));
+						if(gameframe.getBoard().getArray()[px][py]==null){
+							if(selectedX!=-1) {
+								gameframe.move(selectedX, selectedY, px, py);
+								selectedX=-1;
+								selectedY=-1;
+							}
+						}else {
+							selectedX=px;
+							selectedY=py;
+						}
 					}
 				}
 			}

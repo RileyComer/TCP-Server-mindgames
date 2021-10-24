@@ -42,11 +42,26 @@ public class Mode1Display{
 		}
 		
 		//Draw pieces
+		String[][] board=gameframe.getBoard().getArray();
 		for(int y=0; y< frameH; y++) {
 			for(int x=0; x<frameW;x++) {
-				if(gameframe.getBoard().getArray()[x][y]!=null && gameframe.getBoard().getArray()[x][y].contains("Payload")) {
-					g.setColor(new Color(250, 250, 250));
-					g.fillRect(startX+size*x, startY+size*((frameH-1)-y), size, size);
+				if(board[x][y]!=null) {
+					if(board[x][y].contains("Spy")) {
+						g.setColor(new Color(250, 250, 250));
+						g.fillRect(startX+size*x, startY+size*((frameH-1)-y), size, size);
+					}else if(board[x][y].contains("Payload")){
+						g.setColor(new Color(250, 250, 250));
+						g.fillRect(startX+size*x, startY+size*((frameH-1)-y), size, size);
+					}else if(board[x][y].contains("Watcher")){
+						g.setColor(new Color(250, 250, 250));
+						g.fillRect(startX+size*x, startY+size*((frameH-1)-y), size, size);
+					}else if(board[x][y].contains("Temp")){
+						g.setColor(new Color(250, 250, 250));
+						g.fillRect(startX+size*x, startY+size*((frameH-1)-y), size, size);
+					}else if(board[x][y].contains("Assasin")){
+						g.setColor(new Color(250, 250, 250));
+						g.fillRect(startX+size*x, startY+size*((frameH-1)-y), size, size);
+					}
 				}
 			}
 		}

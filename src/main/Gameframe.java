@@ -31,20 +31,40 @@ public class Gameframe {
 			 if(turn%2==1) {
 				 //turn stuff
 			 }else {
-				 int i;
+				 int x1;
+				 int y1;
+				 int x2;
+				 int y2;
 				 System.out.println("waiting");
-				 i = onlineHandler.getInt();
-				 System.out.println(i);
+				 x1 = onlineHandler.getInt();
+				 y1 = onlineHandler.getInt();
+				 x2 = onlineHandler.getInt();
+				 y2 = onlineHandler.getInt();
+				 
+				 //online move
+				 board.getArray()[x2][y2]=board.getArray()[x1][y1];
+				 board.getArray()[x1][y1]=null;
+				 System.out.println(x1+" "+y1+" move to "+x2+" "+y2);
 				 turn++;
 			 }
 		 }else {
 			 if(turn%2==0) {
 				 //turn stuff
 			 }else {
-				 int i;
+				 int x1;
+				 int y1;
+				 int x2;
+				 int y2;
 				 System.out.println("waiting");
-				 i = onlineHandler.getInt();
-				 System.out.println(i);
+				 x1 = onlineHandler.getInt();
+				 y1 = onlineHandler.getInt();
+				 x2 = onlineHandler.getInt();
+				 y2 = onlineHandler.getInt();
+				 
+				 //online move
+				 board.getArray()[x2][y2]=board.getArray()[x1][y1];
+				 board.getArray()[x1][y1]=null;
+				 System.out.println(x1+" "+y1+" move to "+x2+" "+y2);
 				 turn++;
 			 }
 		 }
@@ -58,9 +78,15 @@ public class Gameframe {
 		onlineHandler.close();
 		
 	}
-
-	public void test() {
+	
+	public void move(int x1, int y1, int x2, int y2) {
+		System.out.println("Moved");
+		board.getArray()[x2][y2]=board.getArray()[x1][y1];
+		board.getArray()[x1][y1]=null;
 		turn++;
-		onlineHandler.writeInt(turn);
+		onlineHandler.writeInt(x1);
+		onlineHandler.writeInt(y1);
+		onlineHandler.writeInt(x2);
+		onlineHandler.writeInt(y2);
 	}
 }
