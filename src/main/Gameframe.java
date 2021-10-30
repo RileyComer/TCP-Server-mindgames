@@ -12,11 +12,17 @@ public class Gameframe {
 	private OnlineHandler onlineHandler;
 	private int player;
 	private int turn;
+	private String pMasterMind;
+	private String eMasterMind;
+	private int gameState;
 	
 	 public Gameframe(int player) {
 		 board=new Board();
-		 turn=1;
+		 turn=0;
 		 this.player=player;
+		 pMasterMind="";
+		 eMasterMind="";
+		 gameState=0;
 		 
 		 //online stuff
 		 if(player==1) {
@@ -39,10 +45,29 @@ public class Gameframe {
 			 x2 = onlineHandler.getInt();
 			 y2 = onlineHandler.getInt();
 			 
-			 //online move
-			 board.getArray()[x2][y2]=board.getArray()[x1][y1];
-			 board.getArray()[x1][y1]=null;
-			 turn++;
+			 if(x1==-1 && y1==-1) {
+				 eMasterMind=board.getArray()[x2][y2];
+			 }else if(x1==-2 && y1==-2){
+				 if(board.getArray()[x2][y2].equals(pMasterMind)) {
+					 lose();
+				 }
+				 board.getArray()[x2][y2]=null;
+				 turn++;
+			 }else {
+				//online move
+				 board.getArray()[x2][y2]=board.getArray()[x1][y1];
+				 board.getArray()[x1][y1]=null;
+				 if(board.getArray()[x2][y2].equals("RPayload")) {
+					 if(y2==board.getArray()[0].length-1) {
+						 lose();
+					 }
+				 }else if(board.getArray()[x2][y2].equals("BPayload")) {
+					 if(y2==0) {
+						 lose();
+					 }
+				 }
+				 turn++;
+			 }
 		 }
 	 }
 	 
@@ -53,7 +78,7 @@ public class Gameframe {
 	 public boolean isTurn() {
 		 boolean out=false;
 		 if(player==1) {
-			 if(turn%2==1) {
+			 if(turn==0||turn%2==1) {
 				 out=true;
 			 }
 		 }else {
@@ -74,7 +99,6 @@ public class Gameframe {
 	}
 	
 	public void move(int x1, int y1, int x2, int y2) {
-		System.out.println("Moved");
 		board.getArray()[x2][y2]=board.getArray()[x1][y1];
 		board.getArray()[x1][y1]=null;
 		turn++;
@@ -82,5 +106,62 @@ public class Gameframe {
 		onlineHandler.writeInt(y1);
 		onlineHandler.writeInt(x2);
 		onlineHandler.writeInt(y2);
+		
+		if(board.getArray()[x2][y2].equals("RPayload")) {
+			if(y2==board.getArray()[0].length-1) {
+				win();
+			}
+		}else if(board.getArray()[x2][y2].equals("BPayload")) {
+			if(y2==0) {
+				win();
+			}
+		}
 	}
+	
+	public void sendMasterMind(int x2, int y2) {
+		pMasterMind=board.getArray()[x2][y2];
+		turn=1;
+		onlineHandler.writeInt(-1);
+		onlineHandler.writeInt(-1);
+		onlineHandler.writeInt(x2);
+		onlineHandler.writeInt(y2);
+	}
+
+	public int getTurn() {
+		return turn;
+	}
+
+	public String getPMasterMind() {
+		return pMasterMind;
+	}
+
+	public String getEMasterMind() {
+		return eMasterMind;
+	}
+	
+	public void kill(int x, int y) {
+		if(board.getArray()[x][y].equals(eMasterMind)) {
+			win();
+		}
+		board.getArray()[x][y]=null;
+		turn++;
+		onlineHandler.writeInt(-2);
+		onlineHandler.writeInt(-2);
+		onlineHandler.writeInt(x);
+		onlineHandler.writeInt(y);
+		
+	}
+	
+	public void win() {
+		gameState=1;
+	}
+	
+	public int getGameState() {
+		return gameState;
+	}
+	
+	public void lose() {
+		gameState=-1;
+	}
+	
 }

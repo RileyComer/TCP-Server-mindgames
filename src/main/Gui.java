@@ -147,34 +147,66 @@ public class Gui extends JFrame{
 				}
 				startX=(int)((getWidth()/2.0)-((size*frameW)/2.0));
 				startY=(int)((getHeight()/2.0)-((size*frameH)/2.0));
-				if(x>startX && x<startX+size*frameW) {
-					if(y>startY && y<startY+size*frameH) {
-						int px=(int) (x-startX)/size;
-						int py=(int) ((frameH)-((y-startY)/size));
-						if(gameframe.getBoard().getArray()[px][py]==null){
-							if(selectedX!=-1) {
-								if(gameframe.isTurn()) {
-									if(gameframe.getBoard().getMoves(selectedX, selectedY)[px][py]) {
-										gameframe.move(selectedX, selectedY, px, py);
-										selectedX=-1;
-										selectedY=-1;
-										display.getDisplay1().deselect();
+				if(gameframe.getGameState()==0) {
+					if(x>startX && x<startX+size*frameW) {
+						if(y>startY && y<startY+size*frameH) {
+							int px=(int) (x-startX)/size;
+							int py=(int) ((frameH)-((y-startY)/size));
+							if(gameframe.getBoard().getArray()[px][py]==null){
+								if(selectedX!=-1) {
+									if(gameframe.isTurn()) {
+										if(gameframe.getBoard().getMoves(selectedX, selectedY)[px][py]) {
+											gameframe.move(selectedX, selectedY, px, py);
+											selectedX=-1;
+											selectedY=-1;
+											display.getDisplay1().deselect();
+										}
 									}
 								}
-							}
-						}else {
-							if(gameframe.isTurn()) {
-								if(gameframe.getPlayer()==1) {
-									if(gameframe.getBoard().getArray()[px][py].contains("R")) {
-										selectedX=px;
-										selectedY=py;
-										display.getDisplay1().select(selectedX, selectedY);
-									}
-								}else {
-									if(gameframe.getBoard().getArray()[px][py].contains("B")) {
-										selectedX=px;
-										selectedY=py;
-										display.getDisplay1().select(selectedX, selectedY);
+							}else {
+								if(gameframe.isTurn()) {
+									if(gameframe.getPlayer()==1) {
+										if(gameframe.getBoard().getArray()[px][py].contains("R")) {
+											if(gameframe.getTurn()==0) {
+												gameframe.sendMasterMind(px, py);
+											}else {
+												selectedX=px;
+												selectedY=py;
+												display.getDisplay1().select(selectedX, selectedY);
+											}
+										}else {
+											if(selectedX!=-1) {
+												if(gameframe.getBoard().getArray()[selectedX][selectedY].equals(gameframe.getPMasterMind())) {
+													if(gameframe.getBoard().getVision(selectedX, selectedY)[px][py]) {
+														gameframe.kill(px, py);
+														selectedX=-1;
+														selectedY=-1;
+														display.getDisplay1().deselect();
+													}
+												}
+											}
+										}
+									}else {
+										if(gameframe.getBoard().getArray()[px][py].contains("B")) {
+											if(gameframe.getTurn()==0) {
+												gameframe.sendMasterMind(px, py);
+											}else {
+												selectedX=px;
+												selectedY=py;
+												display.getDisplay1().select(selectedX, selectedY);
+											}
+										}else {
+											if(selectedX!=-1) {
+												if(gameframe.getBoard().getArray()[selectedX][selectedY].equals(gameframe.getPMasterMind())) {
+													if(gameframe.getBoard().getVision(selectedX, selectedY)[px][py]) {
+														gameframe.kill(px, py);
+														selectedX=-1;
+														selectedY=-1;
+														display.getDisplay1().deselect();
+													}
+												}
+											}
+										}
 									}
 								}
 							}
