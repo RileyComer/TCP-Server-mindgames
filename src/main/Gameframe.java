@@ -27,56 +27,50 @@ public class Gameframe {
 	 }
 	 
 	 public void update() {
-		 if(player==1) {
-			 if(turn%2==1) {
-				 //turn stuff
-			 }else {
-				 int x1;
-				 int y1;
-				 int x2;
-				 int y2;
-				 System.out.println("waiting");
-				 x1 = onlineHandler.getInt();
-				 y1 = onlineHandler.getInt();
-				 x2 = onlineHandler.getInt();
-				 y2 = onlineHandler.getInt();
-				 
-				 //online move
-				 board.getArray()[x2][y2]=board.getArray()[x1][y1];
-				 board.getArray()[x1][y1]=null;
-				 System.out.println(x1+" "+y1+" move to "+x2+" "+y2);
-				 turn++;
-			 }
+		 if(isTurn()) {
+			//turn stuff
 		 }else {
-			 if(turn%2==0) {
-				 //turn stuff
-			 }else {
-				 int x1;
-				 int y1;
-				 int x2;
-				 int y2;
-				 System.out.println("waiting");
-				 x1 = onlineHandler.getInt();
-				 y1 = onlineHandler.getInt();
-				 x2 = onlineHandler.getInt();
-				 y2 = onlineHandler.getInt();
-				 
-				 //online move
-				 board.getArray()[x2][y2]=board.getArray()[x1][y1];
-				 board.getArray()[x1][y1]=null;
-				 System.out.println(x1+" "+y1+" move to "+x2+" "+y2);
-				 turn++;
-			 }
+			 int x1;
+			 int y1;
+			 int x2;
+			 int y2;
+			 x1 = onlineHandler.getInt();
+			 y1 = onlineHandler.getInt();
+			 x2 = onlineHandler.getInt();
+			 y2 = onlineHandler.getInt();
+			 
+			 //online move
+			 board.getArray()[x2][y2]=board.getArray()[x1][y1];
+			 board.getArray()[x1][y1]=null;
+			 turn++;
 		 }
 	 }
 	 
 	 public Board getBoard() {
 		 return board;
 	 }
+	 
+	 public boolean isTurn() {
+		 boolean out=false;
+		 if(player==1) {
+			 if(turn%2==1) {
+				 out=true;
+			 }
+		 }else {
+			 if(turn%2==0) {
+				 out=true;
+			 }
+		 }
+		 return out;
+	 }
 
 	public void exit() {
 		onlineHandler.close();
 		
+	}
+	
+	public int getPlayer() {
+		return player;
 	}
 	
 	public void move(int x1, int y1, int x2, int y2) {

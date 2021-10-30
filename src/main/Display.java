@@ -44,4 +44,9 @@ public class Display extends JPanel{
 	public void redraw() {
 		this.repaint();
 	}
+
+	public Mode1Display getDisplay1() {
+		return mode1Display;
+		
+	}
 }

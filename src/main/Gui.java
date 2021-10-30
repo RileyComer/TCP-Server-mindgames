@@ -153,13 +153,31 @@ public class Gui extends JFrame{
 						int py=(int) ((frameH)-((y-startY)/size));
 						if(gameframe.getBoard().getArray()[px][py]==null){
 							if(selectedX!=-1) {
-								gameframe.move(selectedX, selectedY, px, py);
-								selectedX=-1;
-								selectedY=-1;
+								if(gameframe.isTurn()) {
+									if(gameframe.getBoard().getMoves(selectedX, selectedY)[px][py]) {
+										gameframe.move(selectedX, selectedY, px, py);
+										selectedX=-1;
+										selectedY=-1;
+										display.getDisplay1().deselect();
+									}
+								}
 							}
 						}else {
-							selectedX=px;
-							selectedY=py;
+							if(gameframe.isTurn()) {
+								if(gameframe.getPlayer()==1) {
+									if(gameframe.getBoard().getArray()[px][py].contains("R")) {
+										selectedX=px;
+										selectedY=py;
+										display.getDisplay1().select(selectedX, selectedY);
+									}
+								}else {
+									if(gameframe.getBoard().getArray()[px][py].contains("B")) {
+										selectedX=px;
+										selectedY=py;
+										display.getDisplay1().select(selectedX, selectedY);
+									}
+								}
+							}
 						}
 					}
 				}
