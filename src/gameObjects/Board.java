@@ -201,6 +201,11 @@ public class Board {
 			}
 		}else if(piece.contains("Detective")) {
 			ox=0;
+			oy=0;
+			if(checkInbounds(px, py, ox, oy)) {
+				out[px+ox][oy+py]=true;
+			}
+			ox=1;
 			oy=1;
 			if(checkInbounds(px, py, ox, oy)) {
 				out[px+ox][oy+py]=true;
@@ -210,13 +215,33 @@ public class Board {
 			if(checkInbounds(px, py, ox, oy)) {
 				out[px+ox][oy+py]=true;
 			}
+			ox=1;
+			oy=-1;
+			if(checkInbounds(px, py, ox, oy)) {
+				out[px+ox][oy+py]=true;
+			}
 			ox=0;
 			oy=-1;
 			if(checkInbounds(px, py, ox, oy)) {
 				out[px+ox][oy+py]=true;
 			}
 			ox=-1;
+			oy=-1;
+			if(checkInbounds(px, py, ox, oy)) {
+				out[px+ox][oy+py]=true;
+			}
+			ox=-1;
 			oy=0;
+			if(checkInbounds(px, py, ox, oy)) {
+				out[px+ox][oy+py]=true;
+			}
+			ox=-1;
+			oy=1;
+			if(checkInbounds(px, py, ox, oy)) {
+				out[px+ox][oy+py]=true;
+			}
+			ox=0;
+			oy=1;
 			if(checkInbounds(px, py, ox, oy)) {
 				out[px+ox][oy+py]=true;
 			}

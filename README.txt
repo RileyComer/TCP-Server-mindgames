@@ -1,5 +1,5 @@
 Mind games
 
 todo:
->Add sprites
->Create mastermind select
+> Testing game
+> Improve movement/board size
