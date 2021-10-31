@@ -11,7 +11,7 @@ public class OnlineHandler {
 	public OnlineHandler(String type) {
 		this.type=type;
 		//online stuff
-		 address="142.231.43.161";//public IP
+		 address="142.231.47.73";//public IP
 		 try {
 			 if(type.equals("server")) {
 				 server=new Server(3000);

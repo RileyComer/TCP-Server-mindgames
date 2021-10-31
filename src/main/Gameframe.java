@@ -1,6 +1,10 @@
 package main;
 
+import java.io.File;
 import java.io.IOException;
+
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 import gameObjects.Board;
 import serverAndClient.Client;
@@ -15,6 +19,9 @@ public class Gameframe {
 	private String pMasterMind;
 	private String eMasterMind;
 	private int gameState;
+	
+	private static File turnEnd=new File ("src/resources/turnEnd.WAV");
+	private static File kill=new File ("src/resources/kill.WAV");
 	
 	 public Gameframe(int player) {
 		 board=new Board();
@@ -53,6 +60,7 @@ public class Gameframe {
 				 }
 				 board.getArray()[x2][y2]=null;
 				 turn++;
+				 playSound(kill);
 			 }else {
 				//online move
 				 board.getArray()[x2][y2]=board.getArray()[x1][y1];
@@ -67,6 +75,7 @@ public class Gameframe {
 					 }
 				 }
 				 turn++;
+				 playSound(turnEnd);
 			 }
 		 }
 	 }
@@ -102,6 +111,7 @@ public class Gameframe {
 		board.getArray()[x2][y2]=board.getArray()[x1][y1];
 		board.getArray()[x1][y1]=null;
 		turn++;
+		playSound(turnEnd);
 		onlineHandler.writeInt(x1);
 		onlineHandler.writeInt(y1);
 		onlineHandler.writeInt(x2);
@@ -145,6 +155,7 @@ public class Gameframe {
 		}
 		board.getArray()[x][y]=null;
 		turn++;
+		playSound(kill);
 		onlineHandler.writeInt(-2);
 		onlineHandler.writeInt(-2);
 		onlineHandler.writeInt(x);
@@ -162,6 +173,16 @@ public class Gameframe {
 	
 	public void lose() {
 		gameState=-1;
+	}
+	
+	private static void playSound(File Sound) {
+		try {
+			Clip clip = AudioSystem.getClip();
+			clip.open(AudioSystem.getAudioInputStream(Sound));
+			clip.start();
+		}catch(Exception e) {
+			
+		}
 	}
 	
 }
